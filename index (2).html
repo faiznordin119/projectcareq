@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CareQ — A Healthcare Proposal for Malaysia</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #0F6E56;
+      --green-mid: #1D9E75;
+      --green-light: #9FE1CB;
+      --green-pale: #E1F5EE;
+      --green-faint: #F0FAF6;
+      --green-dark: #085041;
+      --text-primary: #1A1A1A;
+      --text-secondary: #6B6B6B;
+      --text-hint: #9A9A9A;
+      --bg: #ffffff;
+      --bg-soft: #FAFAFA;
+      --border: #E0E0DC;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text-primary);
+      background: var(--bg);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 0.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 40px;
+    }
+
+    .logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      color: var(--green);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--green); }
+
+    .btn-teal {
+      background: var(--green);
+      color: #fff;
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      padding: 9px 22px;
+      border-radius: 24px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+
+    .btn-teal:hover { background: #0a5240; transform: translateY(-1px); }
+
+    .btn-outline {
+      background: #fff;
+      color: var(--green);
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      padding: 9px 22px;
+      border-radius: 24px;
+      border: 1.5px solid var(--green);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+
+    .btn-outline:hover { background: var(--green-faint); transform: translateY(-1px); }
+
+    /* HAMBURGER */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--text-primary);
+      transition: all 0.2s;
+    }
+
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      gap: 0;
+      background: #fff;
+      border-bottom: 0.5px solid var(--border);
+      padding: 8px 0;
+    }
+
+    .mobile-menu a {
+      padding: 12px 40px;
+      font-size: 15px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu.open { display: flex; }
+
+    /* PAGES */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* HERO */
+    .hero {
+      padding: 96px 40px 80px;
+      text-align: center;
+      background: #fff;
+    }
+
+    .tag {
+      display: inline-block;
+      background: var(--green-faint);
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 14px;
+      border-radius: 24px;
+      border: 0.5px solid var(--green-light);
+      margin-bottom: 20px;
+      letter-spacing: 0.03em;
+    }
+
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(36px, 5vw, 56px);
+      line-height: 1.15;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+    }
+
+    .hero h1 em { color: var(--green); font-style: italic; }
+
+    .hero p {
+      font-size: 16px;
+      color: var(--text-secondary);
+      max-width: 480px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 56px;
+      flex-wrap: wrap;
+    }
+
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      border: 0.5px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      max-width: 500px;
+      margin: 0 auto;
+      background: var(--bg-soft);
+    }
+
+    .stat {
+      flex: 1;
+      padding: 20px 16px;
+      text-align: center;
+      border-right: 0.5px solid var(--border);
+    }
+
+    .stat:last-child { border-right: none; }
+
+    .stat-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 28px;
+      color: var(--green);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-hint);
+      margin-top: 4px;
+      display: block;
+    }
+
+    /* SECTIONS */
+    .section {
+      padding: 72px 40px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .section-full {
+      padding: 72px 40px;
+      background: var(--bg-soft);
+    }
+
+    .section-full-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-hint);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(26px, 3vw, 36px);
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .section-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      max-width: 520px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+
+    .divider {
+      height: 0.5px;
+      background: var(--border);
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    /* PROBLEM CARDS */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .prob-card {
+      background: #fff;
+      border: 0.5px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .prob-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+
+    .prob-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--green-faint);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+
+    .prob-title {
+      font-size: 15px;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: var(--text-primary);
+    }
+
+    .prob-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* FEATURES GRID */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .feat-card {
+      border: 0.5px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      background: #fff;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .feat-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+
+    .feat-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      display: inline-block;
+      margin-right: 8px;
+    }
+
+    .feat-title {
+      font-size: 15px;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: var(--text-primary);
+    }
+
+    .feat-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* PAGE HEROES */
+    .page-hero {
+      padding: 80px 40px 64px;
+      text-align: center;
+      border-bottom: 0.5px solid var(--border);
+      background: #fff;
+    }
+
+    .page-hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(28px, 4vw, 44px);
+      color: var(--text-primary);
+      margin: 14px 0 16px;
+      line-height: 1.2;
+    }
+
+    .page-hero p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      max-width: 460px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* TIMELINE */
+    .timeline {
+      position: relative;
+      padding-left: 28px;
+      border-left: 2px solid var(--green-light);
+    }
+
+    .tl-item {
+      margin-bottom: 32px;
+      position: relative;
+    }
+
+    .tl-item:last-child { margin-bottom: 0; }
+
+    .tl-dot {
+      width: 12px;
+      height: 12px;
+      background: var(--green);
+      border-radius: 50%;
+      position: absolute;
+      left: -35px;
+      top: 5px;
+      border: 2px solid #fff;
+      outline: 1.5px solid var(--green);
+    }
+
+    .tl-title {
+      font-size: 15px;
+      font-weight: 500;
+      margin-bottom: 5px;
+      color: var(--text-primary);
+    }
+
+    .tl-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* FEATURES LIST PAGE */
+    .feat-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .feat-row {
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+      padding: 20px 24px;
+      border: 0.5px solid var(--border);
+      border-radius: 14px;
+      background: #fff;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .feat-row:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.05); }
+
+    .feat-num {
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      background: var(--green);
+      color: #fff;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    .feat-info-title {
+      font-size: 15px;
+      font-weight: 500;
+      margin-bottom: 5px;
+      color: var(--text-primary);
+    }
+
+    .feat-info-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* TEAM */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+      margin-top: 8px;
+    }
+
+    .team-card {
+      border: 0.5px solid var(--border);
+      border-radius: 14px;
+      padding: 24px 16px;
+      text-align: center;
+      background: #fff;
+      transition: transform 0.2s;
+    }
+
+    .team-card:hover { transform: translateY(-3px); }
+
+    .avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--green-faint);
+      color: var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 500;
+      margin: 0 auto 12px;
+      border: 1px solid var(--green-light);
+    }
+
+    .team-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .team-role {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    /* CONTACT CARDS */
+    .info-card {
+      border: 0.5px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      margin-bottom: 12px;
+      background: var(--bg-soft);
+    }
+
+    .info-label {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-hint);
+      margin-bottom: 6px;
+    }
+
+    .info-value {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 0.5px solid var(--border);
+      padding: 28px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fff;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 18px;
+      color: var(--green);
+    }
+
+    .footer-text {
+      font-size: 13px;
+      color: var(--text-hint);
+    }
+
+    /* CTA BANNER */
+    .cta-banner {
+      background: var(--green);
+      padding: 64px 40px;
+      text-align: center;
+    }
+
+    .cta-banner h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(24px, 3vw, 36px);
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .cta-banner p {
+      font-size: 15px;
+      color: var(--green-light);
+      margin-bottom: 28px;
+    }
+
+    .btn-white {
+      background: #fff;
+      color: var(--green);
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      padding: 10px 26px;
+      border-radius: 24px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+
+    .btn-white:hover { background: var(--green-pale); transform: translateY(-1px); }
+
+    /* RESPONSIVE */
+    @media (max-width: 680px) {
+      nav { padding: 14px 20px; }
+      .nav-links, nav > .btn-teal { display: none; }
+      .hamburger { display: flex; }
+      .hero { padding: 64px 20px 56px; }
+      .section { padding: 52px 20px; }
+      .section-full { padding: 52px 20px; }
+      .page-hero { padding: 56px 20px 48px; }
+      .cta-banner { padding: 48px 20px; }
+      footer { padding: 24px 20px; }
+      .stats-row { flex-direction: column; max-width: 280px; }
+      .stat { border-right: none; border-bottom: 0.5px solid var(--border); }
+      .stat:last-child { border-bottom: none; }
+      .feat-row { padding: 16px; }
+    }
+
+    /* FADE IN */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .page.active .hero,
+    .page.active .page-hero {
+      animation: fadeUp 0.4s ease both;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <span class="logo" onclick="showPage('home')">CareQ</span>
+    <ul class="nav-links">
+      <li><a href="#" onclick="showPage('home'); return false;">Home</a></li>
+      <li><a href="#" onclick="showPage('about'); return false;">About</a></li>
+      <li><a href="#" onclick="showPage('features'); return false;">Features</a></li>
+      <li><a href="#" onclick="showPage('contact'); return false;">Contact</a></li>
+    </ul>
+    <a href="#" class="btn-teal" onclick="showPage('features'); return false;">See Features</a>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#" onclick="showPage('home'); toggleMenu(); return false;">Home</a>
+    <a href="#" onclick="showPage('about'); toggleMenu(); return false;">About</a>
+    <a href="#" onclick="showPage('features'); toggleMenu(); return false;">Features</a>
+    <a href="#" onclick="showPage('contact'); toggleMenu(); return false;">Contact</a>
+  </div>
+
+  <!-- HOME PAGE -->
+  <div class="page active" id="page-home">
+    <div class="hero">
+      <span class="tag">A proposal for Malaysia</span>
+      <h1>Healthcare, <em>finally</em><br/>on your schedule.</h1>
+      <p>An integrated health app to end long queues, promote self-monitoring, and put patients in full control of their care.</p>
+      <div class="hero-btns">
+        <a href="#" class="btn-teal" onclick="showPage('about'); return false;">Read the Proposal</a>
+        <a href="#" class="btn-outline" onclick="showPage('features'); return false;">See Features</a>
+      </div>
+      <div class="stats-row">
+        <div class="stat">
+          <span class="stat-num">4.5h</span>
+          <span class="stat-label">avg clinic wait</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">60%</span>
+          <span class="stat-label">preventable visits</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">1 app</span>
+          <span class="stat-label">complete solution</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-full">
+      <div class="section-full-inner">
+        <p class="section-label">The problem</p>
+        <h2 class="section-title">Why clinics feel broken</h2>
+        <p class="section-desc">Every Malaysian has felt this. You take a half-day off work just to wait three hours for a five-minute consultation.</p>
+        <div class="problem-grid">
+          <div class="prob-card">
+            <div class="prob-icon">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <circle cx="9" cy="9" r="7" stroke="#0F6E56" stroke-width="1.4"/>
+                <line x1="9" y1="5" x2="9" y2="9.5" stroke="#0F6E56" stroke-width="1.4" stroke-linecap="round"/>
+                <circle cx="9" cy="12" r="0.8" fill="#0F6E56"/>
+              </svg>
+            </div>
+            <p class="prob-title">Long queues</p>
+            <p class="prob-desc">No way to know how busy a clinic is before you arrive. You only find out once you're already there.</p>
+          </div>
+          <div class="prob-card">
+            <div class="prob-icon">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <rect x="2.5" y="3.5" width="13" height="12" rx="2" stroke="#0F6E56" stroke-width="1.4"/>
+                <line x1="6" y1="2" x2="6" y2="6" stroke="#0F6E56" stroke-width="1.4" stroke-linecap="round"/>
+                <line x1="12" y1="2" x2="12" y2="6" stroke="#0F6E56" stroke-width="1.4" stroke-linecap="round"/>
+                <line x1="5.5" y1="10" x2="12.5" y2="10" stroke="#0F6E56" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <p class="prob-title">No appointments</p>
+            <p class="prob-desc">Most government clinics don't offer advance booking, forcing walk-ins and unpredictable waits.</p>
+          </div>
+          <div class="prob-card">
+            <div class="prob-icon">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <circle cx="9" cy="9" r="7" stroke="#0F6E56" stroke-width="1.4"/>
+                <line x1="9" y1="5.5" x2="9" y2="9" stroke="#0F6E56" stroke-width="1.4" stroke-linecap="round"/>
+                <line x1="9" y1="11" x2="9" y2="12.5" stroke="#0F6E56" stroke-width="1.4" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <p class="prob-title">Hidden costs</p>
+            <p class="prob-desc">Patients visiting private clinics rarely know the fees until they're handed the bill at the end.</p>
+          </div>
+          <div class="prob-card">
+            <div class="prob-icon">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M9 2C5.69 2 3 4.69 3 8s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6z" stroke="#0F6E56" stroke-width="1.4"/>
+                <path d="M6.5 9.5C7.1 11 10.9 11 11.5 9.5" stroke="#0F6E56" stroke-width="1.2" stroke-linecap="round"/>
+                <line x1="9" y1="14" x2="9" y2="16" stroke="#0F6E56" stroke-width="1.4" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <p class="prob-title">No self-monitoring</p>
+            <p class="prob-desc">Most people only interact with healthcare when something is already wrong — not before.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <p class="section-label">The solution</p>
+      <h2 class="section-title">One app. Full picture.</h2>
+      <p class="section-desc">CareQ handles everything from booking to health tracking, so patients arrive informed and clinics run smoother.</p>
+      <div class="features-grid">
+        <div class="feat-card"><span class="feat-dot"></span><p class="feat-title">Appointment booking</p><p class="feat-desc">Reserve a timeslot at government or private clinics in advance.</p></div>
+        <div class="feat-card"><span class="feat-dot"></span><p class="feat-title">Live queue tracker</p><p class="feat-desc">See wait times and crowd levels before you leave home.</p></div>
+        <div class="feat-card"><span class="feat-dot"></span><p class="feat-title">Health metrics log</p><p class="feat-desc">Track BP, glucose, heart rate and temperature over time.</p></div>
+        <div class="feat-card"><span class="feat-dot"></span><p class="feat-title">AI symptom checker</p><p class="feat-desc">Guided advice: rest at home or visit a doctor?</p></div>
+        <div class="feat-card"><span class="feat-dot"></span><p class="feat-title">Clinic locator</p><p class="feat-desc">Find nearby clinics filtered by hours, services and crowd.</p></div>
+        <div class="feat-card"><span class="feat-dot"></span><p class="feat-title">Digital health record</p><p class="feat-desc">Meds, diagnoses, vaccinations — carried everywhere.</p></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-full">
+      <div class="section-full-inner">
+        <p class="section-label">User Testing Results</p>
+        <h2 class="section-title">Validated by real users</h2>
+        <p class="section-desc">We tested CareQ with six real users and collected structured feedback across three evaluation themes. Here's what they said.</p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 40px;">
+          <div style="background: #fff; border: 0.5px solid #E0E0DC; border-radius: 14px; padding: 28px 20px; text-align: center;">
+            <div style="font-family: 'DM Serif Display', serif; font-size: 40px; color: #0F6E56; line-height: 1;">4.61</div>
+            <div style="font-size: 11px; color: #9A9A9A; margin-top: 4px; margin-bottom: 10px;">out of 5.0</div>
+            <div style="font-size: 13px; font-weight: 500; color: #1A1A1A;">Appointment Booking</div>
+            <div style="font-size: 12px; color: #6B6B6B; margin-top: 4px;">High ease of use &amp; reliability</div>
+          </div>
+          <div style="background: #fff; border: 0.5px solid #E0E0DC; border-radius: 14px; padding: 28px 20px; text-align: center;">
+            <div style="font-family: 'DM Serif Display', serif; font-size: 40px; color: #0F6E56; line-height: 1;">4.11</div>
+            <div style="font-size: 11px; color: #9A9A9A; margin-top: 4px; margin-bottom: 10px;">out of 5.0</div>
+            <div style="font-size: 13px; font-weight: 500; color: #1A1A1A;">Queue Tracker</div>
+            <div style="font-size: 12px; color: #6B6B6B; margin-top: 4px;">Positive reception with room to grow</div>
+          </div>
+          <div style="background: #fff; border: 0.5px solid #E0E0DC; border-radius: 14px; padding: 28px 20px; text-align: center;">
+            <div style="font-family: 'DM Serif Display', serif; font-size: 40px; color: #0F6E56; line-height: 1;">4.0</div>
+            <div style="font-size: 11px; color: #9A9A9A; margin-top: 4px; margin-bottom: 10px;">out of 5.0</div>
+            <div style="font-size: 13px; font-weight: 500; color: #1A1A1A;">Overall Experience</div>
+            <div style="font-size: 12px; color: #6B6B6B; margin-top: 4px;">Intuitive and beneficial</div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px;">
+          <div style="background: #fff; border: 0.5px solid #E0E0DC; border-left: 3px solid #0F6E56; border-radius: 0 10px 10px 0; padding: 20px;">
+            <p style="font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #9A9A9A; margin-bottom: 10px;">What users loved</p>
+            <p style="font-size: 13px; color: #6B6B6B; line-height: 1.6; font-style: italic;">"I like that the app helps me avoid long waiting times, lets me plan my visit better, and makes clinic visits more convenient and less stressful."</p>
+          </div>
+          <div style="background: #fff; border: 0.5px solid #E0E0DC; border-left: 3px solid #9FE1CB; border-radius: 0 10px 10px 0; padding: 20px;">
+            <p style="font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #9A9A9A; margin-bottom: 10px;">What we improved</p>
+            <p style="font-size: 13px; color: #6B6B6B; line-height: 1.6;">Queue tracker clarity, real-time data transparency, delay notifications, flexible timeslot selection, and a clear data privacy statement — all addressed in the next iteration.</p>
+          </div>
+        </div>
+
+        <div style="background: #F0FAF6; border: 0.5px solid #9FE1CB; border-radius: 12px; padding: 20px 24px;">
+          <p style="font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #0F6E56; margin-bottom: 8px;">Testing methodology</p>
+          <p style="font-size: 13px; color: #6B6B6B; line-height: 1.6;">Six real users evaluated the prototype across three themes using a Likert Scale (1–5) for quantitative ratings, followed by open-ended qualitative feedback on functionality, ease of use, and overall experience.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-banner">
+      <h2>Ready to learn more?</h2>
+      <p>Explore the full proposal and all eight features of the app.</p>
+      <a href="#" class="btn-white" onclick="showPage('features'); return false;">View All Features</a>
+    </div>
+
+    <footer>
+      <span class="footer-logo">CareQ</span>
+      <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px;">
+        <span class="footer-text">A healthcare proposal for Malaysia &middot; 2025</span>
+        <span class="footer-text">Your data is protected and used only for appointment booking purposes.</span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ABOUT PAGE -->
+  <div class="page" id="page-about">
+    <div class="page-hero">
+      <span class="tag">Background</span>
+      <h1>Why this app exists</h1>
+      <p>The Malaysian healthcare system is strained by a familiar problem — patients and clinics are both losing time to an outdated process.</p>
+    </div>
+
+    <div class="section">
+      <p class="section-label">The context</p>
+      <h2 class="section-title">A system under pressure</h2>
+      <p class="section-desc">Access to healthcare in both government and private clinics often comes with a familiar frustration: long queues, extended waiting times, and the uncertainty of not knowing how crowded a clinic will be on any given day.</p>
+      <p style="font-size:15px; color:var(--text-secondary); line-height:1.7; margin-bottom:16px;">These challenges not only strain patients but also affect clinic staff, who must juggle unpredictable walk-in volumes and heavy administrative workloads. The result is a system where everyone loses — patients spend hours waiting, and doctors see rushed consultations.</p>
+      <p style="font-size:15px; color:var(--text-secondary); line-height:1.7;">CareQ is a proposal to close that gap. It is designed not just as a digital queue system, but as a complete healthcare companion — one that offers convenience, promotes preventive care, improves transparency, and helps patients manage their health with confidence.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-full">
+      <div class="section-full-inner">
+        <p class="section-label">Patient journey</p>
+        <h2 class="section-title">How it works, step by step</h2>
+        <p class="section-desc">From the moment you feel unwell to leaving the clinic — CareQ removes every friction point along the way.</p>
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <p class="tl-title">Feel unwell at home</p>
+            <p class="tl-desc">Open the app and use the AI symptom checker. Answer a few guided questions to find out whether to rest at home or visit a clinic.</p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <p class="tl-title">Find the right clinic</p>
+            <p class="tl-desc">The clinic locator shows nearby options with live crowd levels, opening hours, services offered, and estimated consultation costs.</p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <p class="tl-title">Book your timeslot</p>
+            <p class="tl-desc">Reserve a slot in advance. No more walk-in guesswork — you arrive knowing exactly when you'll be seen.</p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <p class="tl-title">Arrive and consult</p>
+            <p class="tl-desc">Your health record is already on the app. The doctor gets a clearer picture faster — making the consultation quicker and more effective.</p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <p class="tl-title">Ongoing self-monitoring</p>
+            <p class="tl-desc">After your visit, continue tracking your health readings. Get medication reminders and lifestyle nudges to stay ahead of your health.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-banner">
+      <h2>See what the app can do</h2>
+      <p>Eight features built around the patient experience.</p>
+      <a href="#" class="btn-white" onclick="showPage('features'); return false;">Explore Features</a>
+    </div>
+
+    <footer>
+      <span class="footer-logo">CareQ</span>
+      <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px;">
+        <span class="footer-text">A healthcare proposal for Malaysia &middot; 2025</span>
+        <span class="footer-text">Your data is protected and used only for appointment booking purposes.</span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- FEATURES PAGE -->
+  <div class="page" id="page-features">
+    <div class="page-hero">
+      <span class="tag">All features</span>
+      <h1>Everything in one place</h1>
+      <p>Eight core features designed to give patients full control and reduce unnecessary pressure on clinics.</p>
+    </div>
+
+    <div class="section">
+      <div class="feat-list">
+        <div class="feat-row">
+          <div class="feat-num">1</div>
+          <div>
+            <p class="feat-info-title">Appointment booking</p>
+            <p class="feat-info-desc">Book timeslots at government or private clinics in advance. No more half-day walk-ins or uncertainty about availability.</p>
+          </div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-num">2</div>
+          <div>
+            <p class="feat-info-title">Real-time queue tracker</p>
+            <p class="feat-info-desc">See live wait times and current patient count before leaving home. Plan your visit around your schedule, not the clinic's.</p>
+          </div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-num">3</div>
+          <div>
+            <p class="feat-info-title">Health metrics log</p>
+            <p class="feat-info-desc">Track blood pressure, heart rate, body temperature, and glucose levels. The app shows trends over time and alerts you when readings fall outside healthy ranges.</p>
+          </div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-num">4</div>
+          <div>
+            <p class="feat-info-title">AI symptom checker</p>
+            <p class="feat-info-desc">A guided questionnaire that helps you decide: rest at home, monitor your symptoms, or visit a doctor. Not a diagnostic tool — a decision support tool.</p>
+          </div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-num">5</div>
+          <div>
+            <p class="feat-info-title">Clinic locator</p>
+            <p class="feat-info-desc">Find the nearest clinic based on your location. Filter by opening hours, services offered, crowd level, and type of facility. Navigate directly via integrated maps.</p>
+          </div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-num">6</div>
+          <div>
+            <p class="feat-info-title">Estimated costs</p>
+            <p class="feat-info-desc">Know the approximate consultation fees and potential test costs before you arrive. Reduces financial uncertainty, especially for private clinic visits.</p>
+          </div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-num">7</div>
+          <div>
+            <p class="feat-info-title">Digital health record</p>
+            <p class="feat-info-desc">Securely store medications, past diagnoses, vaccination history, and test results. Share with your doctor in one tap. Includes reminders for medication refills.</p>
+          </div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-num">8</div>
+          <div>
+            <p class="feat-info-title">Lifestyle guidance</p>
+            <p class="feat-info-desc">Personalised daily calorie goals, balanced meal suggestions, hydration reminders, and exercise nudges based on your age, weight, and activity level.</p>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top: 32px; display:flex; justify-content:center;">
+        <a href="proposal.pdf" class="btn-teal" download>Download Proposal PDF</a>
+      </div>
+    </div>
+
+    <div class="cta-banner">
+      <h2>Want to know the team behind this?</h2>
+      <p>Meet the people who put this proposal together.</p>
+      <a href="#" class="btn-white" onclick="showPage('contact'); return false;">Meet the Team</a>
+    </div>
+
+    <footer>
+      <span class="footer-logo">CareQ</span>
+      <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px;">
+        <span class="footer-text">A healthcare proposal for Malaysia &middot; 2025</span>
+        <span class="footer-text">Your data is protected and used only for appointment booking purposes.</span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- CONTACT PAGE -->
+  <div class="page" id="page-contact">
+    <div class="page-hero">
+      <span class="tag">The team</span>
+      <h1>Behind the proposal</h1>
+      <p>A team passionate about making healthcare more accessible and efficient for every Malaysian.</p>
+    </div>
+
+    <div class="section">
+      <p class="section-label">Team members</p>
+      <h2 class="section-title" style="margin-bottom: 8px;">The people involved</h2>
+      <p class="section-desc">The team behind this healthcare proposal.</p>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="avatar">K</div>
+          <p class="team-name">Kasem Bau</p>
+          <p class="team-role">MBS244044</p>
+        </div>
+        <div class="team-card">
+          <div class="avatar">K</div>
+          <p class="team-name">Kemi Yonaniko</p>
+          <p class="team-role">MBS244050</p>
+        </div>
+        <div class="team-card">
+          <div class="avatar">H</div>
+          <p class="team-name">Hardev Singh A/L Harpal Singh</p>
+          <p class="team-role">MBS244056</p>
+        </div>
+        <div class="team-card">
+          <div class="avatar">N</div>
+          <p class="team-name">Nor Shahira Binti Md Isa</p>
+          <p class="team-role">MBS244062</p>
+        </div>
+        <div class="team-card">
+          <div class="avatar">N</div>
+          <p class="team-name">Noraisyah Binti Nordin</p>
+          <p class="team-role">MBS244082</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 56px;">
+        <p class="section-label">Get in touch</p>
+        <h2 class="section-title" style="font-size: 24px; margin-bottom: 8px;">Contact us</h2>
+        <p style="font-size:14px; color:var(--text-secondary); margin-bottom: 24px;">Interested in this proposal? Reach out below.</p>
+        <div class="info-card">
+          <p class="info-label">Email</p>
+          <p class="info-value">hello@careq.my</p>
+        </div>
+        <div class="info-card">
+          <p class="info-label">Institution</p>
+          <p class="info-value">Universiti Malaya &middot; 2025</p>
+        </div>
+        <div style="margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap;">
+          <a href="proposal.pdf" class="btn-teal" download>Download Proposal PDF</a>
+          <a href="#" class="btn-outline" onclick="showPage('home'); return false;">Back to Home</a>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <span class="footer-logo">CareQ</span>
+      <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px;">
+        <span class="footer-text">A healthcare proposal for Malaysia &middot; 2025</span>
+        <span class="footer-text">Your data is protected and used only for appointment booking purposes.</span>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    function showPage(name) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + name).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleMenu() {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+  </script>
+
+</body>
+</html>
